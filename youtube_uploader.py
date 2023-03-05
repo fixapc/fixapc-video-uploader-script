@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 import os
 import google.auth
+from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google.oauth2.credentials import Credentials
+from googleapiclient.http import MediaFileUpload
 
 # Set video file path
 video_path = '/mnt/fixapc.netnextcloud/fixapc/files/EVERYTHING/AUDIO VIDEO/VIDEO_PRODUCTION/completed.mp4'
@@ -93,3 +95,5 @@ if video_id:
     print('Video uploaded: https://www.youtube.com/watch?v=' + video_id)
 else:
     print('Video upload failed.')
+from googleapiclient.http import MediaFileUpload
+media_body=MediaFileUpload(video_path)
