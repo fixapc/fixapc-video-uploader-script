@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 black="\033[0;30m"
 red="\033[0;31m"
 green="\033[0;32m"
@@ -10,9 +11,15 @@ cyan="\033[0;36m"
 white="\033[0;37m"
 nocolor="\033[0m"
 
+#The user to launch chrome under
+user=usr
+
+#Your Saved Video Location
+videosavelocation="/mnt/fixapc.net/mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL"
+
 #Testing
 read -r -p "$(echo -e "$yellow Please Enter The Title Of The Video $nocolor")" title
-text=https://www.fixapc.net/$title
+text="https://www.fixapc.net/$title"
 
 #Testing
 read -r -p "$(echo -e "$yellow Please Enter The Type Of Tutorial:$nocolor $green 1=Micro Tutorial $nocolor, $blue Full Tutorial=2 $nocolor, $red Quick Fix=3 $nocolor")" selecttuttype
@@ -28,15 +35,17 @@ else
 fi
 
 #Testing
-read -r -p "$(echo -e "$yellow Please Enter The Logo Keyword To Insert To The Video Cover $nocolor")" logokeyword
-links2 -g "https://www.google.com/search?q=$logokeyword%20logo&tbm=isch&tbs=ift:png"
+#read -r -p "$(echo -e "$yellow Please Enter The Logo Keyword To Insert To The Video Cover $nocolor")" logokeyword
+#sudo -u $user google-chrome "https://www.google.com/search?q=$logokeyword%20logo&tbm=isch&tbs=ift:png"
 
 #
-read -r -p "$(echo -e "$yellow Please Paste The PNG URL That You Wish To Upload To Use $nocolor")" pngimg
+#read -r -p "$(echo -e "$yellow Please Paste The PNG URL That You Wish To Upload To Use $nocolor")" dlpngimg
+
+#wget dlpngimg
 
 #Create Title
 titlefolder=$(echo -e "$title" | sed 's& &_&gI')
-mkdir /mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO\ VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL/"$titlefolder"
+mkdir "$videosavelocation"/"$titlefolder"
 
 #Create Support Links
 supportlinks='
@@ -75,15 +84,23 @@ convert news_banner_ai.png -fill white -stroke black \
 -pointsize 32 -font URWGothic-Demi -draw 'text 190,65 "'"$title"'"' \
 -pointsize 20 -font URWGothic-Demi -draw 'text 220,100 "'"$text"'"' \
 news_banner.png
-cp -a -r -f -v news_banner.png /mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO\ VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL/"$titlefolder"
+cp -a -r -f -v news_banner.png "$videosavelocation"
 rm news_banner.png
 
 #Create Video Cover
 convert $typeoftutorial -fill white -stroke black \
 -pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" \
-video_cover_pre.png
-composite -gravity center "$pngimg" video_cover_pre.png video_cover.png
-cp -a -r -f -v video_cover.png /mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO\ VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL/"$titlefolder"
+video_cover.png
+cp -a -r -f -v video_cover.png "$videosavelocation"
 rm video_cover.png
 
+#Create Video Cover
+#convert $typeoftutorial -fill white -stroke black \
+#-pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" \
+#video_cover.png
 
+#add image overlay to gentoo
+#video_cover_pre.png
+#composite -gravity center "$pngimg" video_cover_pre.png video_cover.png
+#cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
+#rm video_cover.png
