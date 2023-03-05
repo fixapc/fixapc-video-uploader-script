@@ -45,7 +45,7 @@ fi
 
 #Create Title
 titlefolder=$(echo -e "$title" | sed 's& &_&gI')
-mkdir "$videosavelocation"/"$titlefolder"
+sudo -u mkdir "$videosavelocation"/"$titlefolder"
 
 #Create Support Links
 supportlinks='
@@ -113,7 +113,9 @@ sudo -u $user cp -a -r -f -v "$videosavelocation"/inclip.mp4    "$videosavelocat
 sudo -u $user cp -a -r -f -v "$videosavelocation"/outclip.mp4   "$videosavelocation"/"$titlefolder"
 
 #start obs and wait for close
-sudo -u usr chrt -f 1 obs
+sudo -u usr obs
+chrt -f -p 1 $(pidof obs)
 
-
+#
 echo "obs has closed"
+
