@@ -11,7 +11,7 @@ cyan="\033[0;36m"
 white="\033[0;37m"
 nocolor="\033[0m"
 
-export LIBVA_DRIVER_NAME=nvidia
+export 
 
 #The user to launch chrome under
 user=usr
@@ -87,7 +87,7 @@ convert news_banner_ai.png -fill white -stroke black \
 -pointsize 20 -font URWGothic-Demi -draw 'text 220,100 "'"$text"'"' \
 news_banner.png
 sudo -u $user cp -a -r -f -v news_banner.png "$videosavelocation"/
-sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
+sudo -u $user cp -a -r -f -v news_banner.png "$videosavelocation"/"$titlefolder"
 rm news_banner.png
 
 #Create Video Cover
@@ -115,7 +115,7 @@ sudo -u $user cp -a -r -f -v "$videosavelocation"/inclip.mp4    "$videosavelocat
 sudo -u $user cp -a -r -f -v "$videosavelocation"/outclip.mp4   "$videosavelocation"/"$titlefolder"
 
 #start obs and wait for close
-sudo -u $user obs
+sudo -u $user LIBVA_DRIVER_NAME=nvidia obs
 chrt -f -p 1 $(pidof obs)
 
 #
