@@ -84,14 +84,16 @@ convert news_banner_ai.png -fill white -stroke black \
 -pointsize 32 -font URWGothic-Demi -draw 'text 190,65 "'"$title"'"' \
 -pointsize 20 -font URWGothic-Demi -draw 'text 220,100 "'"$text"'"' \
 news_banner.png
-cp -a -r -f -v news_banner.png "$videosavelocation"
+sudo -u $user cp -a -r -f -v news_banner.png "$videosavelocation"/
+sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
 rm news_banner.png
 
 #Create Video Cover
 convert $typeoftutorial -fill white -stroke black \
 -pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" \
 video_cover.png
-cp -a -r -f -v video_cover.png "$videosavelocation"
+sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"
+sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
 rm video_cover.png
 
 #Create Video Cover
@@ -104,3 +106,14 @@ rm video_cover.png
 #composite -gravity center "$pngimg" video_cover_pre.png video_cover.png
 #cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
 #rm video_cover.png
+
+
+#Copy Outro And Intro Clip To The Newly Created Folder
+sudo -u $user cp -a -r -f -v "$videosavelocation"/inclip.mp4    "$videosavelocation"/"$titlefolder"
+sudo -u $user cp -a -r -f -v "$videosavelocation"/outclip.mp4   "$videosavelocation"/"$titlefolder"
+
+#start obs and wait for close
+sudo -u usr chrt -f 1 obs
+
+
+echo "obs has closed"
