@@ -11,6 +11,8 @@ cyan="\033[0;36m"
 white="\033[0;37m"
 nocolor="\033[0m"
 
+export LIBVA_DRIVER_NAME=nvidia
+
 #The user to launch chrome under
 user=usr
 
