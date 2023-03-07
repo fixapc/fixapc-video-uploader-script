@@ -11,7 +11,8 @@ cyan="\033[0;36m"
 white="\033[0;37m"
 nocolor="\033[0m"
 
-export 
+#Set the cover image
+python3 addcoverimg.py
 
 #The user to launch chrome under
 user=usr
@@ -21,7 +22,6 @@ videosavelocation="/mnt/fixapc.net/mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO V
 
 #Testing
 read -r -p "$(echo -e "$yellow Please Enter The Title Of The Video $nocolor")" title
-text="https://www.fixapc.net/$title"
 
 #Testing
 read -r -p "$(echo -e "$yellow Please Enter The Type Of Tutorial:$nocolor $green 1=Micro Tutorial $nocolor, $blue Full Tutorial=2 $nocolor, $red Quick Fix=3 $nocolor")" selecttuttype
@@ -36,18 +36,10 @@ else
     exit
 fi
 
-#Testing
-#read -r -p "$(echo -e "$yellow Please Enter The Logo Keyword To Insert To The Video Cover $nocolor")" logokeyword
-#sudo -u $user google-chrome "https://www.google.com/search?q=$logokeyword%20logo&tbm=isch&tbs=ift:png"
-
-#
-#read -r -p "$(echo -e "$yellow Please Paste The PNG URL That You Wish To Upload To Use $nocolor")" dlpngimg
-
-#wget dlpngimg
-
 #Create Title
 titlefolder=$(echo -e "$title" | sed 's& &_&gI')
 sudo -u $user mkdir "$videosavelocation"/"$titlefolder"
+text="https://www.fixapc.net/$titlefolder"
 
 #Create Support Links
 supportlinks='
@@ -93,31 +85,36 @@ rm news_banner.png
 #Create Video Cover
 convert $typeoftutorial -fill white -stroke black \
 -pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" \
-video_cover.png
-sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"
+video_cover.png \
+sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation" \
 sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
-rm video_cover.png
-
-#Create Video Cover
-#convert $typeoftutorial -fill white -stroke black \
-#-pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" \
-#video_cover.png
 
 #add image overlay to gentoo
-#video_cover_pre.png
-#composite -gravity center "$pngimg" video_cover_pre.png video_cover.png
-#cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
-#rm video_cover.png
-
+video_cover_pre.png
+composite -gravity center image.png video_cover.png
+sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
+sudo rm video_cover.png
 
 #Copy Outro And Intro Clip To The Newly Created Folder
 sudo -u $user cp -a -r -f -v "$videosavelocation"/inclip.mp4    "$videosavelocation"/"$titlefolder"
 sudo -u $user cp -a -r -f -v "$videosavelocation"/outclip.mp4   "$videosavelocation"/"$titlefolder"
 
 #start obs and wait for close
+sudo -u $user easyeffects
+sudo -u $user pavucontrol
 sudo -u $user LIBVA_DRIVER_NAME=nvidia obs
-chrt -f -p 1 $(pidof obs)
+for pid in $(pidof easyeffects); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof easyeffects); do sudo chrt -p "$pid"; done;
+for pid in $(pidof pipewire); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof pipewire); do sudo chrt -p "$pid"; done;
+for pid in $(pidof pipewire-pulse); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof pipewire-pulse); do sudo chrt -p "$pid"; done;
+for pid in $(pidof pavucontrol); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof pavucontrol); do sudo chrt -p "$pid"; done;
+for pid in $(pidof obs); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof obs); do sudo chrt -p "$pid"; done;
+for pid in $(pidof ssh); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof ssh); do sudo chrt -p "$pid"; done;
+for pid in $(pidof virt-manager); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof virt-manager); do sudo chrt -p "$pid"; done;
 
 #
-echo "obs has closed"
+read -r -p "$(echo -e "$yellow Start The Video Uploads:$nocolor $green Y/y=YES $nocolor, $red N/n=NO $nocolor")" startupload
+if [[ $startupload = Y ]] || [[ $startupload = y ]]; then
+echo enter upload script here
+else exit
+fi
 
