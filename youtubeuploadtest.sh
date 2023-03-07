@@ -4,45 +4,15 @@ import pickle
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaFileUpload
 
-#Create Support Links
-supportlinks='
-Platform - Links
-Homepage - https://www.fixapc.net
-Forum    - https://forum.fixapc.net
-Facebook - https://www.facebook.com/Fixapcdotnet
-Twitter  - https://twitter.com/FIXAPCdotnet
-Twitch   - https://www.twitch.tv/fixapcdotnet
-Youtube  - https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ
-Odysee   - https://odysee.com/@Fixapc:5
-Tiktok   - https://www.tiktok.com/@fixapc
-Dtube    - https://d.tube/#!/c/fixapc777
-Vimeo    - https://vimeo.com/user151963004
-
-Communication Links
-Discord  - https://discord.gg/fwaJ9V8c
-
-Support US If you would like to me more content and tutorials.
-Supporters have tutorial request priority
-Patreon  - https://www.patreon.com/
-Paypal   - https://paypal.me/FIXAPC/
-Cashapp  - https://cash.app/$fixapc/
-
-For a full range of support options including crypto.
-https://fixapc.net/support-us/
-
-Request a tutorial
-https://fixapc.net/tutorial-request/
-
-Website based version
-https://fixapc.net/'$title'/'
 
 # Define the scope of the YouTube API
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
 # Set the title and description of the video
 title = "My Awesome Video"
-description = "Check out my awesome video! \n\n" + $supportlinks
+description = "Check out my awesome video!"
 
 # Authenticate and build the YouTube API client
 creds = None
@@ -56,8 +26,8 @@ if not creds or not creds.valid:
         flow = InstalledAppFlow.from_client_secrets_file(
             "client_secrets.json", SCOPES)
         creds = flow.run_local_server(port=0)
-    with open("token.pickle", "wb") as token:
-        pickle.dump(creds, token)
+        with open("token.pickle", "wb") as token:
+            pickle.dump(creds, token)
 
 youtube = build("youtube", "v3", credentials=creds)
 

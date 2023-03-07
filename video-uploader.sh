@@ -177,4 +177,3 @@ if [[ $startupload = Y ]] || [[ $startupload = y ]]; then
 echo enter upload script here
 else exit
 fi
-
