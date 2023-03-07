@@ -111,7 +111,7 @@ SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
 # Set the title and description of the video
 title = "$title"
-description = "Check out my awesome video! \n\n" + supportlinks
+description = "Check out my awesome video! \n\n" + $supportlinks
 
 # Authenticate and build the YouTube API client
 creds = None
