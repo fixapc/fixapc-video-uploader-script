@@ -1,11 +1,5 @@
-#!/root/anaconda3/bin/python3
-import os
-import pickle
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-
-#Create Support Links
+#!/bin/bash
+file_path="$videosavelocation"/"$titlefolder"
 supportlinks='
 Platform - Links
 Homepage - https://www.fixapc.net
@@ -35,14 +29,23 @@ Request a tutorial
 https://fixapc.net/tutorial-request/
 
 Website based version
-https://fixapc.net/'$title'/'
+https://fixapc.net/'$title'/'s
+
+python3 <<EOF
+import os
+import pickle
+import google.auth.transport.requests
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaFileUpload
 
 # Define the scope of the YouTube API
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
 # Set the title and description of the video
-title = "My Awesome Video"
-description = "Check out my awesome video! \n\n" + $supportlinks
+title = ""
+description = "Check out my awesome video!"
 
 # Authenticate and build the YouTube API client
 creds = None
@@ -51,13 +54,13 @@ if os.path.exists("token.pickle"):
         creds = pickle.load(token)
 if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
+        creds.refresh(google.auth.transport.requests.Request())
     else:
         flow = InstalledAppFlow.from_client_secrets_file(
             "client_secrets.json", SCOPES)
         creds = flow.run_local_server(port=0)
-    with open("token.pickle", "wb") as token:
-        pickle.dump(creds, token)
+        with open("token.pickle", "wb") as token:
+            pickle.dump(creds, token)
 
 youtube = build("youtube", "v3", credentials=creds)
 
@@ -74,7 +77,7 @@ body = {
 }
 
 # Define the video file path
-file_path = "${htmlimgheader[i]}"
+file_path="$file_path"
 
 try:
     # Upload the video
@@ -88,3 +91,4 @@ try:
     print("Video ID: " + videos_insert_response["id"])
 except HttpError as e:
     print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+EOF
