@@ -29,7 +29,7 @@ Request a tutorial
 https://fixapc.net/tutorial-request/
 
 Website based version
-https://fixapc.net/'$title'/'s
+https://fixapc.net/'$title'/'
 
 python3 <<EOF
 import os
