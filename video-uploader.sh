@@ -87,12 +87,12 @@ convert $typeoftutorial -fill white -stroke black \
 -pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" \
 video_cover.png \
 sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation" \
-sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
+sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder" 
 
 #add image overlay to gentoo
 video_cover_pre.png
 composite -gravity center image.png video_cover.png
-sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder"
+sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder" 
 sudo rm video_cover.png
 
 #Copy Outro And Intro Clip To The Newly Created Folder
@@ -110,7 +110,7 @@ from googleapiclient.errors import HttpError
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
 # Set the title and description of the video
-title = "My Awesome Video"
+title = "$title"
 description = "Check out my awesome video! \n\n" + supportlinks
 
 # Authenticate and build the YouTube API client
