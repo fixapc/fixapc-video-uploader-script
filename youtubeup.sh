@@ -1,4 +1,7 @@
 #!/bin/bash
+title="titletest"
+titlefolder=$(echo -e "$title" | sed 's& &_&gI')
+videosavelocation="/mnt/fixapc.net/mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL"
 file_path="$videosavelocation"/"$titlefolder"
 python3 <<EOF
 import os
