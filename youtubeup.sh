@@ -1,36 +1,5 @@
 #!/bin/bash
 file_path="$videosavelocation"/"$titlefolder"
-supportlinks='
-Platform - Links
-Homepage - https://www.fixapc.net
-Forum    - https://forum.fixapc.net
-Facebook - https://www.facebook.com/Fixapcdotnet
-Twitter  - https://twitter.com/FIXAPCdotnet
-Twitch   - https://www.twitch.tv/fixapcdotnet
-Youtube  - https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ
-Odysee   - https://odysee.com/@Fixapc:5
-Tiktok   - https://www.tiktok.com/@fixapc
-Dtube    - https://d.tube/#!/c/fixapc777
-Vimeo    - https://vimeo.com/user151963004
-
-Communication Links
-Discord  - https://discord.gg/fwaJ9V8c
-
-Support US If you would like to me more content and tutorials.
-Supporters have tutorial request priority
-Patreon  - https://www.patreon.com/
-Paypal   - https://paypal.me/FIXAPC/
-Cashapp  - https://cash.app/$fixapc/
-
-For a full range of support options including crypto.
-https://fixapc.net/support-us/
-
-Request a tutorial
-https://fixapc.net/tutorial-request/
-
-Website based version
-https://fixapc.net/'$title'/'
-
 python3 <<EOF
 import os
 import pickle
