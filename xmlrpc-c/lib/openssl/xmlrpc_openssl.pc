@@ -1,0 +1,7 @@
+Name:        xmlrpc_openssl
+Description: Openssl convenience function from Xmlrpc-c package
+Version:     1.60.0
+
+Requires: xmlrpc_util
+Libs:     -L/usr/local/lib -lxmlrpc_openssl
+Cflags:   -I/usr/local/include
