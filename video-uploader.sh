@@ -21,7 +21,7 @@ python3 addcoverimg.py
 user=usr
 
 #Your Saved Video Location
-videosavelocation="/mnt/fixapc.net/mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL"
+videosavelocation="/mnt/fixapc.net/mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO_VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL"
 
 #Testing
 read -r -p "$(echo -e "$yellow Please Enter The Title Of The Video $nocolor")" title
@@ -139,7 +139,7 @@ convert news_banner_ai.png -fill white -stroke black \
 -pointsize 20 -font URWGothic-Demi -draw 'text 220,100 "'"$text"'"' news_banner.png
 
 #copy news banner to the newly created folder
-sudo -u $user cp -a -r -f -v news_banner.png "$videosavelocation"/"$titlefolder"
+sudo -u $user cp -a -r -f -v news_banner.png "$videosavelocation/$titlefolder"
 
 #Delete news banner
 sudo rm news_banner.png
@@ -148,21 +148,18 @@ sudo rm news_banner.png
 convert $typeoftutorial -fill white -stroke black \
 -pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" video_cover.png
 
-#copy video cover to the newly created folder
-sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder" 
-
 #add image overlay to gentoo
 composite -gravity center image.png video_cover.png
 
 #copy video cover to the newly created folder
-sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder" 
+sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation/$titlefolder" 
 
 #Delete Video Cover
 sudo rm video_cover.png
 
 #Copy Outro And Intro Clip To The Newly Created Folder
-sudo -u $user cp -a -r -f -v "$videosavelocation"/inclip.mp4    "$videosavelocation"/"$titlefolder"
-sudo -u $user cp -a -r -f -v "$videosavelocation"/outclip.mp4   "$videosavelocation"/"$titlefolder"
+sudo -u $user cp -a -r -f -v "$videosavelocation/inclip.mp4"   "$videosavelocation/$titlefolder"
+sudo -u $user cp -a -r -f -v "$videosavelocation/outclip.mp4"   "$videosavelocation/$titlefolder"
 
 #start obs and wait for close
 sudo -u $user easyeffects
