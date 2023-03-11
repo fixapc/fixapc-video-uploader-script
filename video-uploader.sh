@@ -11,6 +11,9 @@ cyan="\033[0;36m"
 white="\033[0;37m"
 nocolor="\033[0m"
 
+
+export LIBVA_DRIVER_NAME=nvidia
+
 #Set the cover image
 python3 addcoverimg.py
 
@@ -40,129 +43,131 @@ fi
 titlefolder=$(echo -e "$title" | sed 's& &_&gI')
 sudo -u $user mkdir "$videosavelocation"/"$titlefolder"
 text="https://www.fixapc.net/$titlefolder"
-
 #Create Support Links
-supportlinks='
-Platform - Links
-Homepage - https://www.fixapc.net
-Forum    - https://forum.fixapc.net
-Facebook - https://www.facebook.com/Fixapcdotnet
-Twitter  - https://twitter.com/FIXAPCdotnet
-Twitch   - https://www.twitch.tv/fixapcdotnet
-Youtube  - https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ
-Odysee   - https://odysee.com/@Fixapc:5
-Tiktok   - https://www.tiktok.com/@fixapc
-Dtube    - https://d.tube/#!/c/fixapc777
-Vimeo    - https://vimeo.com/user151963004
+#supportlinks=''
+#Platform - Links
+#Homepage - https://www.fixapc.net
+#Forum    - https://forum.fixapc.net
+#Facebook - https://www.facebook.com/Fixapcdotnet
+#Twitter  - https://twitter.com/FIXAPCdotnet
+#Twitch   - https://www.twitch.tv/fixapcdotnet
+#Youtube  - https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ
+#Odysee   - https://odysee.com/@Fixapc:5
+#Tiktok   - https://www.tiktok.com/@fixapc
+#Dtube    - https://d.tube/#!/c/fixapc777
+#Vimeo    - https://vimeo.com/user151963004
+#
+#Communication Links
+#Discord  - https://discord.gg/fwaJ9V8c
+#
+#Support US If you would like to me more content and tutorials.
+#Supporters have tutorial request priority
+#Patreon  - https://www.patreon.com/
+#Paypal   - https://paypal.me/FIXAPC/
+#Cashapp  - https://cash.app/$fixapc/
+#
+#For a full range of support options including crypto.
+#https://fixapc.net/support-us/
+#
+#Request a tutorial
+#https://fixapc.net/tutorial-request/
+#
+#Website based version
+#https://fixapc.net/'$title'/'
 
-Communication Links
-Discord  - https://discord.gg/fwaJ9V8c
+#
+python3 <<EOF
+import requests
 
-Support US If you would like to me more content and tutorials.
-Supporters have tutorial request priority
-Patreon  - https://www.patreon.com/
-Paypal   - https://paypal.me/FIXAPC/
-Cashapp  - https://cash.app/$fixapc/
+links = {
+    homepage: https://www.fixapc.net,
+    forum: https://forum.fixapc.net,
+    facebook: https://www.facebook.com/Fixapcdotnet,
+    twitter: https://twitter.com/FIXAPCdotnet,
+    twitch: https://www.twitch.tv/fixapcdotnet,
+    youtube: https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ,
+    odysee: https://odysee.com/@Fixapc:5,
+    tiktok: https://www.tiktok.com/@fixapc,
+    dtube: https://d.tube/#!/c/fixapc777,
+    vimeo: https://vimeo.com/user151963004,
+    discord: https://discord.gg/fwaJ9V8c,
+    patreon: https://www.patreon.com/,
+    paypal: https://paypal.me/FIXAPC/,
+    cashapp: https://cash.app/fixapc/,
+    tutorial_request: https://fixapc.net/tutorial-request/,
+    support_us: https://fixapc.net/support-us/
+}
 
-For a full range of support options including crypto.
-https://fixapc.net/support-us/
+# Set up the API endpoint and authentication
+api_endpoint = 'https://fixapc.net/wp-json/wp/v2/posts'
+username = 'fixapc'
+app_password = 'seYx bEdm kYg0 F53O m5kF dWat'
+auth = requests.auth.HTTPBasicAuth(username, app_password)
 
-Request a tutorial
-https://fixapc.net/tutorial-request/
+# Set up the post data
+post_data = {
+    'title': '$title',
+    'content': str(links),
+    'status': 'publish'
+}
 
-Website based version
-https://fixapc.net/'$title'/'
+# Upload the image to the media library
+image_file = {'file': open('video_cover_fix.png', 'rb')}
+response = requests.post('https://fixapc.net/wp-json/wp/v2/media', files=image_file, auth=auth)
+if response.status_code == 201:
+    media_id = response.json()['id']
+    print('Image uploaded successfully!')
+else:
+    print('Error uploading image. Status code:', response.status_code)
+
+# Set the featured image for the post
+post_data['featured_media'] = media_id
+
+# Make the API request to create the post
+response = requests.post(api_endpoint, json=post_data, auth=auth)
+
+# Check the response status code
+if response.status_code == 201:
+    print('Post created successfully!')
+else:
+    print('Error creating post. Status code:', response.status_code)
+EOF
 
 #Create News Banner
 convert news_banner_ai.png -fill white -stroke black \
 -pointsize 32 -font URWGothic-Demi -draw 'text 190,65 "'"$title"'"' \
--pointsize 20 -font URWGothic-Demi -draw 'text 220,100 "'"$text"'"' \
-news_banner.png
-sudo -u $user cp -a -r -f -v news_banner.png "$videosavelocation"/
+-pointsize 20 -font URWGothic-Demi -draw 'text 220,100 "'"$text"'"' news_banner.png
+
+#copy news banner to the newly created folder
 sudo -u $user cp -a -r -f -v news_banner.png "$videosavelocation"/"$titlefolder"
-rm news_banner.png
+
+#Delete news banner
+sudo rm news_banner.png
 
 #Create Video Cover
 convert $typeoftutorial -fill white -stroke black \
--pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" \
-video_cover.png \
-sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation" \
+-pointsize 60 -font URWGothic-Demi -gravity center -annotate +0+395 "$title" video_cover.png
+
+#copy video cover to the newly created folder
 sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder" 
 
 #add image overlay to gentoo
-video_cover_pre.png
 composite -gravity center image.png video_cover.png
+
+#copy video cover to the newly created folder
 sudo -u $user cp -a -r -f -v video_cover.png "$videosavelocation"/"$titlefolder" 
+
+#Delete Video Cover
 sudo rm video_cover.png
 
 #Copy Outro And Intro Clip To The Newly Created Folder
 sudo -u $user cp -a -r -f -v "$videosavelocation"/inclip.mp4    "$videosavelocation"/"$titlefolder"
 sudo -u $user cp -a -r -f -v "$videosavelocation"/outclip.mp4   "$videosavelocation"/"$titlefolder"
 
-python <<EOF
-import os
-import pickle
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-
-# Define the scope of the YouTube API
-SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
-
-# Set the title and description of the video
-title = "$title"
-description = "Check out my awesome video! \n\n" + $supportlinks
-
-# Authenticate and build the YouTube API client
-creds = None
-if os.path.exists("token.pickle"):
-    with open("token.pickle", "rb") as token:
-        creds = pickle.load(token)
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            "client_secrets.json", SCOPES)
-        creds = flow.run_local_server(port=0)
-    with open("token.pickle", "wb") as token:
-        pickle.dump(creds, token)
-
-youtube = build("youtube", "v3", credentials=creds)
-
-# Set the video metadata
-body = {
-    "snippet": {
-        "title": title,
-        "description": description,
-        "tags": ["tag1", "tag2"]
-    },
-    "status": {
-        "privacyStatus": "public"
-    }
-}
-
-# Define the video file path
-file_path = "$videosavelocation"/"$titlefolder"
-
-try:
-    # Upload the video
-    videos_insert_response = youtube.videos().insert(
-        part=",".join(body.keys()),
-        body=body,
-        media_body=MediaFileUpload(file_path, chunksize=-1, resumable=True)
-    ).execute()
-
-    print("Video uploaded successfully!")
-    print("Video ID: " + videos_insert_response["id"])
-except HttpError as e:
-    print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))t))
-EOF
-
 #start obs and wait for close
 sudo -u $user easyeffects
 sudo -u $user pavucontrol
-sudo -u $user LIBVA_DRIVER_NAME=nvidia obs
+sudo -u $user obs
 for pid in $(pidof easyeffects); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof easyeffects); do sudo chrt -p "$pid"; done;
 for pid in $(pidof pipewire); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof pipewire); do sudo chrt -p "$pid"; done;
 for pid in $(pidof pipewire-pulse); do sudo chrt -f -p 1 "$pid"; done; for pid in $(pidof pipewire-pulse); do sudo chrt -p "$pid"; done;
