@@ -47,22 +47,22 @@ python3 <<EOF
 import requests
 
 links = {
-    'homepage': 'https://www.fixapc.net',
-    'forum': 'https://forum.fixapc.net',
-    'facebook': 'https://www.facebook.com/Fixapcdotnet',
-    'twitter': 'https://twitter.com/FIXAPCdotnet',
-    'twitch': 'https://www.twitch.tv/fixapcdotnet',
-    'youtube': 'https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ',
-    'odysee': 'https://odysee.com/@Fixapc:5',
-    'tiktok': 'https://www.tiktok.com/@fixapc',
-    'dtube': 'https://d.tube/#!/c/fixapc777',
-    'vimeo': 'https://vimeo.com/user151963004',
-    'discord': 'https://discord.gg/fwaJ9V8c',
-    'patreon': 'https://www.patreon.com/',
-    'paypal': 'https://paypal.me/FIXAPC/',
-    'cashapp': 'https://cash.app/fixapc/',
-    'tutorial_request': 'https://fixapc.net/tutorial-request/',
-    'support_us': 'https://fixapc.net/support-us/'
+    'homepage https://www.fixapc.net
+    forum https://forum.fixapc.net
+    facebook https://www.facebook.com/Fixapcdotnet
+    twitter https://twitter.com/FIXAPCdotnet
+    twitch https://www.twitch.tv/fixapcdotnet
+    youtube https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ
+    odysee https://odysee.com/@Fixapc:5
+    tiktok https://www.tiktok.com/@fixapc
+    dtube https://d.tube/#!/c/fixapc777
+    vimeo https://vimeo.com/user151963004
+    discord https://discord.gg/fwaJ9V8c
+    patreon https://www.patreon.com/
+    paypal https://paypal.me/FIXAPC/
+    cashapp https://cash.app/fixapc/
+    tutorial_request https://fixapc.net/tutorial-request/
+    support_us https://fixapc.net/support-us/'
 }
 
 # Set up the API endpoint and authentication
