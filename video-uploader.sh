@@ -46,8 +46,8 @@ text="https://www.fixapc.net/$titlefolder"
 python3 <<EOF
 import requests
 
-links = {
-    'homepage https://www.fixapc.net
+links = '''
+    homepage https://www.fixapc.net
     forum https://forum.fixapc.net
     facebook https://www.facebook.com/Fixapcdotnet
     twitter https://twitter.com/FIXAPCdotnet
@@ -62,8 +62,8 @@ links = {
     paypal https://paypal.me/FIXAPC/
     cashapp https://cash.app/fixapc/
     tutorial_request https://fixapc.net/tutorial-request/
-    support_us https://fixapc.net/support-us/'
-}
+    support_us https://fixapc.net/support-us/
+'''
 
 # Set up the API endpoint and authentication
 api_endpoint = 'https://fixapc.net/wp-json/wp/v2/posts'
