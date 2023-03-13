@@ -11,7 +11,6 @@ cyan="\033[0;36m"
 white="\033[0;37m"
 nocolor="\033[0m"
 
-
 export LIBVA_DRIVER_NAME=nvidia
 
 #Set the cover image
@@ -21,7 +20,7 @@ python3 addcoverimg.py
 user=usr
 
 #Your Saved Video Location
-videosavelocation="/mnt/fixapc.net/mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO_VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL/"
+videosavelocation="/mnt/fixapc.net/mnt/nextcloud/fixapc/files/EVERYTHING/AUDIO_VIDEO/VIDEO_PRODUCTION/FIXAPC_TECH_CHANNEL"
 
 #Testing
 read -r -p "$(echo -e "$yellow Please Enter The Title Of The Video $nocolor")" title
@@ -41,60 +40,28 @@ fi
 
 #Create Title
 titlefolder=$(echo -e "$title" | sed 's& &_&gI')
-sudo -u $user mkdir "$videosavelocation"/"$titlefolder"
 text="https://www.fixapc.net/$titlefolder"
-#Create Support Links
-#supportlinks=''
-#Platform - Links
-#Homepage - https://www.fixapc.net
-#Forum    - https://forum.fixapc.net
-#Facebook - https://www.facebook.com/Fixapcdotnet
-#Twitter  - https://twitter.com/FIXAPCdotnet
-#Twitch   - https://www.twitch.tv/fixapcdotnet
-#Youtube  - https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ
-#Odysee   - https://odysee.com/@Fixapc:5
-#Tiktok   - https://www.tiktok.com/@fixapc
-#Dtube    - https://d.tube/#!/c/fixapc777
-#Vimeo    - https://vimeo.com/user151963004
-#
-#Communication Links
-#Discord  - https://discord.gg/fwaJ9V8c
-#
-#Support US If you would like to me more content and tutorials.
-#Supporters have tutorial request priority
-#Patreon  - https://www.patreon.com/
-#Paypal   - https://paypal.me/FIXAPC/
-#Cashapp  - https://cash.app/$fixapc/
-#
-#For a full range of support options including crypto.
-#https://fixapc.net/support-us/
-#
-#Request a tutorial
-#https://fixapc.net/tutorial-request/
-#
-#Website based version
-#https://fixapc.net/'$title'/'
 
 #
 python3 <<EOF
 import requests
 
 links = {
-    'homepage: https://www.fixapc.net',
-    'forum: https://forum.fixapc.net',
-    'facebook: https://www.facebook.com/Fixapcdotnet',
-    'twitter: https://twitter.com/FIXAPCdotnet',
-    'twitch: https://www.twitch.tv/fixapcdotnet',
-    'youtube: https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ',
-    'odysee: https://odysee.com/@Fixapc:5',
-    'tiktok: https://www.tiktok.com/@fixapc',
-    'dtube: https://d.tube/#!/c/fixapc777',
-    'vimeo: https://vimeo.com/user151963004',
-    'discord: https://discord.gg/fwaJ9V8c',
-    'patreon: https://www.patreon.com/',
-    'paypal: https://paypal.me/FIXAPC/',
-    'cashapp: https://cash.app/fixapc/',
-    'tutorial_request: https://fixapc.net/tutorial-request/',
+    'homepage: https://www.fixapc.net'
+    'forum: https://forum.fixapc.net'
+    'facebook: https://www.facebook.com/Fixapcdotnet'
+    'twitter: https://twitter.com/FIXAPCdotnet'
+    'twitch: https://www.twitch.tv/fixapcdotnet'
+    'youtube: https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ'
+    'odysee: https://odysee.com/@Fixapc:5'
+    'tiktok: https://www.tiktok.com/@fixapc'
+    'dtube: https://d.tube/#!/c/fixapc777'
+    'vimeo: https://vimeo.com/user151963004'
+    'discord: https://discord.gg/fwaJ9V8c'
+    'patreon: https://www.patreon.com/'
+    'paypal: https://paypal.me/FIXAPC/'
+    'cashapp: https://cash.app/fixapc/'
+    'tutorial_request: https://fixapc.net/tutorial-request/'
     'support_us: https://fixapc.net/support-us/'
 }
 
@@ -132,6 +99,8 @@ if response.status_code == 201:
 else:
     print('Error creating post. Status code:', response.status_code)
 EOF
+
+sudo -u $user mkdir "$videosavelocation/$titlefolder"
 
 #Create News Banner
 convert news_banner_ai.png -fill white -stroke black \
