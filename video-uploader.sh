@@ -48,18 +48,18 @@ import requests
 
 links = '''
     COMMUNITY LINKS
-    homepage <a href="https://www.fixapc.net">
-    forum <a href="https://forum.fixapc.net">
-    facebook <a href="https://www.facebook.com/Fixapcdotnet">
-    twitter <a href="https://twitter.com/FIXAPCdotnet">
-    twitch <a href="https://www.twitch.tv/fixapcdotnet">
-    youtube <a href="https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ">
-    odysee <a href="https://odysee.com/@Fixapc:5">
-    tiktok <a href="https://www.tiktok.com/@fixapc">
-    dtube <a href="https://d.tube/#!/c/fixapc777">
-    vimeo <a href="https://vimeo.com/user151963004">
-    discord <a href="https://discord.gg/fwaJ9V8c">
-    patreon <a href="https://www.patreon.com/">
+    <a href="https://www.fixapc.net">Homepage - fixapc.net</a>
+    <a href="https://forum.fixapc.net">Forums - forums.fixapc.net</a>
+    <a href="https://www.facebook.com/Fixapcdotnet">Facebook - Fixapc</a>
+    <a href="https://twitter.com/FIXAPCdotnet">Twitter - Fixapc</a>
+    <a href="https://www.twitch.tv/fixapcdotnet">Twitch - Fixapc</a>
+    <a href="https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ">Youtube - Fixapc</a>
+    <a href="https://odysee.com/@Fixapc:5">Odysee - Fixapc</a>
+    <a href="https://www.tiktok.com/@fixapc">TikTok - Fixapc</a>
+    <a href="https://d.tube/#!/c/fixapc777">dTube - Fixapc</a>
+    <a href="https://vimeo.com/user151963004">Vimeo - Fixapc</a>
+    <a href="https://discord.gg/fwaJ9V8c">Discord - Fixapc</a>
+    <a href="https://www.patreon.com/">Patreon - Fixapc</a>
 
     SUPPORT LINKS
     paypal https://paypal.me/FIXAPC/
