@@ -13,9 +13,6 @@ nocolor="\033[0m"
 
 export LIBVA_DRIVER_NAME=nvidia
 
-#Set the cover image
-python3 addcoverimg.py
-
 #The user to launch chrome under
 user=usr
 
@@ -118,7 +115,7 @@ import requests
 
 links = '''
     VIDEO TITLE - $title
-    WEBSITE LINK - $text
+    <a href="$text">WEBSITE LINK - $text</a>
 
     COMMUNITY LINKS
     <a href="https://www.fixapc.net">HOMEPAGE - https://www.fixapc.net</a>
