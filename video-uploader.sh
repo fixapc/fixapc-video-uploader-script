@@ -38,34 +38,109 @@ else
     exit
 fi
 
+#Start the image selector
+python3 <<EOF
+import os
+import requests
+import shutil
+from bs4 import BeautifulSoup
+from urllib.parse import urlparse
+import subprocess
+
+# set the search keywords
+search_query = "gentoo logo"
+file_type = "png"
+
+# get the first word in the search query
+query_words = search_query.split()
+if len(query_words) > 0:
+    first_word = query_words[0]
+else:
+    first_word = "image"
+
+# set the number of images to download
+num_images = 20
+
+# set the directory to save the images
+save_dir = "images"
+
+# create the save directory if it doesn't exist
+if not os.path.exists(save_dir):
+    os.makedirs(save_dir)
+
+# perform the Google search and download the images
+url = f"https://www.google.com/search?q={search_query}&source=lnms&tbm=isch&tbs=imgo:1"
+response = requests.get(url)
+
+soup = BeautifulSoup(response.text, "html.parser")
+image_links = soup.select("div.rg_i")
+
+for i, img in enumerate(image_links[:num_images]):
+    img_url = img.select_one("img.rg_i")["data-src"]
+    parsed_url = urlparse(img_url)
+    if not parsed_url.scheme:
+        img_url = f"http:{img_url}"
+    if not parsed_url.netloc:
+        img_url = f"http://www.google.com{img_url}"
+    filename = f"{first_word}_{i+1}.{file_type}"
+    filepath = os.path.join(filename)
+
+    try:
+        response = requests.get(img_url, stream=True)
+        with open(filepath, "wb") as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+    except Exception as e:
+        print(f"Failed to download {filename}: {e}")
+
+# show a preview of the images using fzf
+image_files = [f for f in os.listdir(
+    save_dir) if os.path.isfile(os.path.join(f))]
+image_files.sort()
+fzf_command = f"fzf --preview 'feh {os.path.join('{}')}' --prompt='Select image: ' --ansi"
+selected_file = subprocess.check_output(
+    fzf_command, shell=True, text=True).strip()
+if selected_file:
+    # rename the selected file to "image.png"
+    new_filepath = os.path.join("image.png")
+    os.rename(os.path.join(selected_file), new_filepath)
+    print(f"Renamed {selected_file} to image.png")
+else:
+    print("No image selected.")
+EOF
+
 #Create Title
 titlefolder=$(echo -e "$title" | sed 's& &_&gI')
 text="https://www.fixapc.net/$titlefolder"
 
-#
+#Start the wordpress poster script
 python3 <<EOF
 import requests
 
 links = '''
+    VIDEO TITLE - $title
+    WEBSITE LINK - $text
+
     COMMUNITY LINKS
-    <a href="https://www.fixapc.net">Homepage - fixapc.net</a>
-    <a href="https://forum.fixapc.net">Forums - forums.fixapc.net</a>
-    <a href="https://www.facebook.com/Fixapcdotnet">Facebook - Fixapc</a>
-    <a href="https://twitter.com/FIXAPCdotnet">Twitter - Fixapc</a>
-    <a href="https://www.twitch.tv/fixapcdotnet">Twitch - Fixapc</a>
-    <a href="https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ">Youtube - Fixapc</a>
-    <a href="https://odysee.com/@Fixapc:5">Odysee - Fixapc</a>
-    <a href="https://www.tiktok.com/@fixapc">TikTok - Fixapc</a>
-    <a href="https://d.tube/#!/c/fixapc777">dTube - Fixapc</a>
-    <a href="https://vimeo.com/user151963004">Vimeo - Fixapc</a>
-    <a href="https://discord.gg/fwaJ9V8c">Discord - Fixapc</a>
-    <a href="https://www.patreon.com/">Patreon - Fixapc</a>
+    <a href="https://www.fixapc.net">HOMEPAGE - https://www.fixapc.net</a>
+    <a href="https://forum.fixapc.net">FORUMS - https://forum.fixapc.net</a>
+    <a href="https://www.facebook.com/Fixapcdotnet">FACEBOOK - https://www.facebook.com/Fixapcdotnet</a>
+    <a href="https://twitter.com/FIXAPCdotnet">TWITTER - https://twitter.com/FIXAPCdotnet</a>
+    <a href="https://www.twitch.tv/fixapcdotnet">TWITCH - https://www.twitch.tv/fixapcdotnet</a>
+    <a href="https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ">YOUTUBE - https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ</a>
+    <a href="https://odysee.com/@fixapc">ODYSEE - https://odysee.com/@fixapc</a>
+    <a href="https://www.tiktok.com/@fixapc">TIKTOK - https://www.tiktok.com/@fixapc</a>
+    <a href="https://d.tube/#!/c/fixapc777">DTUBE - https://d.tube/#!/c/fixapc777</a>
+    <a href="https://vimeo.com/user151963004">VIMEO - https://vimeo.com/user151963004</a>
+    <a href="https://discord.gg/fwaJ9V8c">DISCORD - https://discord.gg/fwaJ9V8c</a>
+    <a href="https://www.patreon.com/">PATREON - https://www.patreon.com/</a>
+
+    TUTORIAL REQUESTS
+    <a href="https://fixapc.net/tutorial-request/">REQUEST A TUTORIAL - https://fixapc.net/tutorial-request</a>
 
     SUPPORT LINKS
-    paypal https://paypal.me/FIXAPC/
-    cashapp https://cash.app/fixapc/
-    tutorial_request https://fixapc.net/tutorial-request/
-    support_us https://fixapc.net/support-us/
+    <a href="https://paypal.me/FIXAPC">PAYPAL - https://paypal.me/FIXAPC</a>
+    <a href="https://cash.app/fixapc/Patreon">CASHAPP - https://cash.app/fixapc/Patreon</a>
+    <a href="https://fixapc.net/support-us/Patreon">PATREON - https://fixapc.net/support-us/Patreon</a>
 '''
 
 # Set up the API endpoint and authentication
