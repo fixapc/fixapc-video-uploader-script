@@ -47,18 +47,21 @@ python3 <<EOF
 import requests
 
 links = '''
-    homepage https://www.fixapc.net
-    forum https://forum.fixapc.net
-    facebook https://www.facebook.com/Fixapcdotnet
-    twitter https://twitter.com/FIXAPCdotnet
-    twitch https://www.twitch.tv/fixapcdotnet
-    youtube https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ
-    odysee https://odysee.com/@Fixapc:5
-    tiktok https://www.tiktok.com/@fixapc
-    dtube https://d.tube/#!/c/fixapc777
-    vimeo https://vimeo.com/user151963004
-    discord https://discord.gg/fwaJ9V8c
-    patreon https://www.patreon.com/
+    COMMUNITY LINKS
+    homepage <a href="https://www.fixapc.net">
+    forum <a href="https://forum.fixapc.net">
+    facebook <a href="https://www.facebook.com/Fixapcdotnet">
+    twitter <a href="https://twitter.com/FIXAPCdotnet">
+    twitch <a href="https://www.twitch.tv/fixapcdotnet">
+    youtube <a href="https://www.youtube.com/channel/UCSvBW8e2zGNFiSUSD9qLNbQ">
+    odysee <a href="https://odysee.com/@Fixapc:5">
+    tiktok <a href="https://www.tiktok.com/@fixapc">
+    dtube <a href="https://d.tube/#!/c/fixapc777">
+    vimeo <a href="https://vimeo.com/user151963004">
+    discord <a href="https://discord.gg/fwaJ9V8c">
+    patreon <a href="https://www.patreon.com/">
+
+    SUPPORT LINKS
     paypal https://paypal.me/FIXAPC/
     cashapp https://cash.app/fixapc/
     tutorial_request https://fixapc.net/tutorial-request/
